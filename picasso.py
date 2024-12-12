@@ -7,7 +7,7 @@ class GUI(customtkinter.CTk):
     def __init__(self):
         super().__init__()
         self.title("tic-tac-toe")
-        self.geometry("1100x1600")
+        self.geometry("600x800")
         self.grid_columnconfigure((0,1), weight=1)  
         self.grid_rowconfigure((0,1) , weight=1)
         self.f1 = customtkinter.CTkFrame(self, width = 1000, height = 1500)
