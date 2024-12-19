@@ -19,6 +19,3 @@ class AIReq():
 
 
 ai_request = AIReq("french")
-
-
-
