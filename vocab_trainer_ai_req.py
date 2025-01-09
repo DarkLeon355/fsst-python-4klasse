@@ -25,9 +25,10 @@ class AIReq():
         response_text = response.text[10:]
         response_text = response_text[:-4]
         try:
-            return ast.literal_eval(response_text)
+            self.dic = ast.literal_eval(response_text)
+            return self.dic
         except:
             return {"Error":"Error"}
 
 
-ai_request = AIReq(str(input("Please type in Language: ")))
+dictionary = AIReq(str(input("Please type in Language: "))).dic
