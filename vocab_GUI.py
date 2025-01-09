@@ -1,4 +1,6 @@
 import customtkinter
+import vocab_trainer_ai_req as ai
+
 
 class InputFields(customtkinter.CTkFrame):
     def __init__(self,master):
@@ -26,25 +28,23 @@ class InputFields(customtkinter.CTkFrame):
         self.languageselected = False #To help return the correct value first
 
     def getinputs(self):
-        self.language = self.selectedlanugage=self.language.get()
-        self.playerinput = self.filledplayerinput=self.playerinput.get()
-        print(self.selectedlanugage)
+        self.selectedlanguage=self.language.get()
+        self.filledplayerinput=self.playerinput.get()
+        print(self.selectedlanguage)
         print(self.filledplayerinput)
-        if self.languageselected == True:
-            return (self.playerinput)
-        else:                               #Returns the language and the next time the button is pressed the translated word
-            if self.language == None:
-                self.languageselected = False
-            else:
-                self.languageselected = True
-            return (self.language)
+        
+        
 
+        
 
-    def vocabcheck(self,vocab,playervocab):
-
+    def vocabcheck(self,playervocab):
+        dictionary = ai.AIReq(self.selectedlanguage).dic
+        print(dictionary)
         playervocab = self.playerinput
+        for index, (key, value) in enumerate(dictionary.items()): 
+            print(f"Index: {index}, Key: {key}, Value: {value}")
         if vocab == playervocab:
-            ""
+            self.playerinput.config(self,fg_color="Green",text_color="white")
 
 class GUI(customtkinter.CTk):
     def __init__(self):
