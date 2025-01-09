@@ -23,13 +23,29 @@ class InputFields(customtkinter.CTkFrame):
         self.languagebutton = customtkinter.CTkButton(self,fg_color="Green",text_color="Green",text="",width=100,height=100,command=self.getinputs,corner_radius=0)
         self.languagebutton.grid(row=1, column=1, padx=10, pady=10, sticky="nesw", columnspan=1)
 
+        self.languageselected = False #To help return the correct value first
+
     def getinputs(self):
-        self.selectedlanugage=self.language.get()
-        self.filledplayerinput=self.playerinput.get()
+        self.language = self.selectedlanugage=self.language.get()
+        self.playerinput = self.filledplayerinput=self.playerinput.get()
         print(self.selectedlanugage)
         print(self.filledplayerinput)
+        if self.languageselected == True:
+            return (self.playerinput)
+        else:                               #Returns the language and the next time the button is pressed the translated word
+            if self.language == None:
+                self.languageselected = False
+            else:
+                self.languageselected = True
+            return (self.language)
 
-        
+
+    def vocabcheck(self,vocab,playervocab):
+
+        playervocab = self.playerinput
+        if vocab == playervocab:
+            ""
+
 class GUI(customtkinter.CTk):
     def __init__(self):
         super().__init__()
