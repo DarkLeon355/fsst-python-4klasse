@@ -31,5 +31,4 @@ class AIReq():
             return {"Error":"Error"}
 
 
-resp = AIReq(str(input("Please type in Language: "))).dic
-print(resp)
+dictionary = AIReq(str(input("Please type in Language: "))).dic
