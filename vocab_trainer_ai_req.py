@@ -5,8 +5,8 @@ import ast
 
 class AIReq():
     def __init__(self, language):
-        self.key1 = "AIzaSyAnDj2Yzt1wNeByTnTSsWo--11Qd-M6oB0a"
-        self.key_recovery = "AIzaSyCIFxvdiaiIjjSragfPK5V9gnLHHXKKN4s"
+        self.key1 = "AIzaSyAHWeLtdZ0vxt8wT-DuHJTyzxF9BRkwhP4"
+        self.key_recovery = "AIzaSyAmOteH9Z6BBc93pV5HYAEoIQz5GdwF2NA"
         self.language = language
         print(self.get_response())
 
@@ -26,6 +26,7 @@ class AIReq():
         response_text = response_text[:-4]
         try:
             self.dic = ast.literal_eval(response_text)
+            #print(self.dic)
         except:
             self.dic = {"Error":"Error"}
 

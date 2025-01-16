@@ -41,8 +41,8 @@ class InputFields(customtkinter.CTkFrame):
         dictionary = ai.AIReq(self.selectedlanguage).dic
         print(dictionary)
         playervocab = self.playerinput
-        for index, (key, value) in enumerate(dictionary.items()): 
-            print(f"Index: {index}, Key: {key}, Value: {value}")
+        #for index, (key, value) in enumerate(dictionary.items()): 
+            #print(f"Index: {index}, Key: {key}, Value: {value}")
         if vocab == playervocab:
             self.playerinput.config(self,fg_color="Green",text_color="white")
 
