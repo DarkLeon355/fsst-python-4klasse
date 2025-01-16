@@ -6,26 +6,33 @@ class InputFields(customtkinter.CTkFrame):
     def __init__(self,master):
         super().__init__(master)
 
+        customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
+        customtkinter.set_default_color_theme("themes/breeze.json")
         self.grid_columnconfigure((0, 1), weight=1) 
         self.grid_rowconfigure((1, 2), weight=1)
         
-        self.titleframe = customtkinter.CTkFrame(self,fg_color="gray",height=40)
+        self.titleframe = customtkinter.CTkFrame(self,height=40)
         self.titleframe.grid(row=0, column=0, padx=10, pady=10, sticky="nesw", columnspan=2)
 
-        self.title = customtkinter.CTkLabel(self.titleframe,text="Please input a language then press the button")
+        self.title = customtkinter.CTkLabel(self.titleframe,text="Please input a language then press the button:")
         self.title.grid(row=0, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
 
-        self.language = customtkinter.CTkEntry(self,fg_color="Black",text_color="white")
+        self.language = customtkinter.CTkEntry(self)
         self.language.grid(row=1, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
+        self.vocab = customtkinter.CTkTextbox(self,state="disabled",activate_scrollbars=False,height=1)
+        self.vocab.grid(row=3, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
+        self.vocablabelframe = customtkinter.CTkFrame(self)
+        self.vocablabelframe.grid(row=2, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
+        self.vocablabel = customtkinter.CTkLabel(self.vocablabelframe,text="This is the word to translate:")
+        self.vocablabel.grid(row=0, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
+        self.playerinput = customtkinter.CTkEntry(self)
+        self.playerinput.grid(row=3, column=1, padx=10, pady=10, sticky="nesw", columnspan=1)
+        self.playerinputframe = customtkinter.CTkFrame(self)
+        self.playerinputframe.grid(row=2, column=1, padx=10, pady=10, sticky="nesw", columnspan=1)
+        self.playerlabel = customtkinter.CTkLabel(self.playerinputframe,text="Your translation:")
+        self.playerlabel.grid(row=0, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
 
-        self.vocab = customtkinter.CTkTextbox(self,fg_color="Black",text_color="white",state="disabled",activate_scrollbars=False,height=1)
-        self.vocab.grid(row=2, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
-
-        self.playerinput = customtkinter.CTkEntry(self,fg_color="Black",text_color="white")
-        self.playerinput.grid(row=2, column=1, padx=10, pady=10, sticky="nesw", columnspan=1)
-        self.playerinput.bind("<Return>", self.checkplayerinput())    #Binds the enter key to get playerinput
-
-        self.languagebutton = customtkinter.CTkButton(self,fg_color="Green",text_color="Green",text="",width=100,height=100,command=self.getinputs,corner_radius=0)
+        self.languagebutton = customtkinter.CTkButton(self, text="Submit Language", command = self.getinputs)
         self.languagebutton.grid(row=1, column=1, padx=10, pady=10, sticky="nesw", columnspan=1)
 
         self.languageselected = False #To help return the correct value first
