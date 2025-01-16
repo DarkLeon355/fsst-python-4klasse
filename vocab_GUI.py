@@ -17,36 +17,53 @@ class InputFields(customtkinter.CTkFrame):
 
         self.language = customtkinter.CTkEntry(self,fg_color="Black",text_color="white")
         self.language.grid(row=1, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
+
         self.vocab = customtkinter.CTkTextbox(self,fg_color="Black",text_color="white",state="disabled",activate_scrollbars=False,height=1)
         self.vocab.grid(row=2, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
+
         self.playerinput = customtkinter.CTkEntry(self,fg_color="Black",text_color="white")
         self.playerinput.grid(row=2, column=1, padx=10, pady=10, sticky="nesw", columnspan=1)
+        self.playerinput.bind("<Return>", self.checkplayerinput())    #Binds the enter key to get playerinput
 
         self.languagebutton = customtkinter.CTkButton(self,fg_color="Green",text_color="Green",text="",width=100,height=100,command=self.getinputs,corner_radius=0)
         self.languagebutton.grid(row=1, column=1, padx=10, pady=10, sticky="nesw", columnspan=1)
 
         self.languageselected = False #To help return the correct value first
+        
 
     def getinputs(self):
         self.selectedlanguage=self.language.get()
-        self.filledplayerinput=self.playerinput.get()
+        self.checkplayerinput()
         print(self.selectedlanguage)
         print(self.filledplayerinput)
-        self.vocabcheck()
-        
-
-        
-
-    def vocabcheck(self,playervocab):
-        dictionary = ai.AIReq(self.selectedlanguage).dic
-        print(dictionary)
-        playervocab = self.playerinput
-        for index, (key, value) in enumerate(dictionary.items()): 
-            print(f"Index: {index}, Key: {key}, Value: {value}")
-        if vocab == playervocab:
-            self.playerinput.config(self,fg_color="Green",text_color="white")
+        if self.selectedlanguage == None:
+            self.languagebutton.configure(self,fg_color="Green",text_color="Green",text="Input required",width=100,height=100,command=self.getinputs,corner_radius=0)
         else:
-            self.playerinput.config(self,fg_color="Red",text_color="white")
+            self.languagebutton.configure(self,fg_color="Green",text_color="Green",text="",width=100,height=100,command=self.getinputs,corner_radius=0)
+            self.vocabcheck()
+        
+    def checkplayerinput(self,event=None):
+        self.filledplayerinput =self.playerinput.get()
+        
+    def vocabcheck(self):
+        self.createdictionary()
+        print(self.dictionary) 
+        for index, (key, value) in enumerate(self.dictionary.items()):
+            print(f"Index: {index}, Key: {key}, Value: {value}")
+
+            self.currentvocab = value
+            self.filledplayerinput = self.checkplayerinput()
+
+            if self.currentvocab == self.filledplayerinput:
+                self.playerinput.configure(self,fg_color="Green",text_color="white")
+            else:
+                self.playerinput.configure(self,fg_color="Red",text_color="white")
+                index-=1
+            print(index)
+
+    def createdictionary(self):
+        self.dictionary = ai.AIReq(self.selectedlanguage).dic
+
 
 class GUI(customtkinter.CTk):
     def __init__(self):
