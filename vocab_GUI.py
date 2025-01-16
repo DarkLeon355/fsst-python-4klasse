@@ -6,6 +6,11 @@ class InputFields(customtkinter.CTkFrame):
     def __init__(self,master):
         super().__init__(master)
 
+        self.vocablist=[]
+        self.keylist=[]
+
+        self.realindex=0
+
         customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
         customtkinter.set_default_color_theme("C:/Users\Mario/OneDrive - HTL Anichstrasse/Desktop/Fsst collectione/FSST/4.Klasse/Fettsack/fsst-python-4klasse/themes/breeze.json")
         self.grid_columnconfigure((0, 1), weight=1) 
@@ -55,18 +60,25 @@ class InputFields(customtkinter.CTkFrame):
         return(self.filledplayerinput)
         
     def vocabcheck(self):
-        for index, (key, value) in enumerate(self.dictionary.items()):
-
-            self.currentvocab = self.dictionary(key,value)
+        for key, value in self.dictionary.items():
+                self.keylist.append(key)
+                self.vocablist.append(value)
+        for self.index, (key, value) in enumerate(self.dictionary.items()):
+            
+            self.currentvocab = self.vocablist[self.realindex]
             self.filledplayerinput = self.checkplayerinput()
-
+            
             if self.currentvocab == self.filledplayerinput:
                 self.playerinput.configure(self,fg_color="Green",text_color="white")
+                self.realindex+=1
+                print(self.realindex)           #FIX MIT .POP BEI DICTIONARIES DIE VALUES IN LISTE ADDEN
+
             else:
                 self.playerinput.configure(self,fg_color="Red",text_color="white")
         print(self.filledplayerinput)
         print(self.currentvocab)
         self.after(500, self.vocabcheck)
+
 
     def initialize(self):
         self.createdictionary()
