@@ -7,7 +7,7 @@ class InputFields(customtkinter.CTkFrame):
         super().__init__(master)
 
         customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-        customtkinter.set_default_color_theme("themes/breeze.json")
+        customtkinter.set_default_color_theme("C:/Users\Mario/OneDrive - HTL Anichstrasse/Desktop/Fsst collectione/FSST/4.Klasse/Fettsack/fsst-python-4klasse/themes/breeze.json")
         self.grid_columnconfigure((0, 1), weight=1) 
         self.grid_rowconfigure((1, 2), weight=1)
         
@@ -44,32 +44,37 @@ class InputFields(customtkinter.CTkFrame):
         print(self.selectedlanguage)
         print(self.filledplayerinput)
         if self.selectedlanguage == None:
-            self.languagebutton.configure(self,fg_color="Green",text_color="Green",text="Input required",width=100,height=100,command=self.getinputs,corner_radius=0)
+            self.languagebutton.configure(self,text="Input required",command=self.getinputs,corner_radius=0)
         else:
-            self.languagebutton.configure(self,fg_color="Green",text_color="Green",text="",width=100,height=100,command=self.getinputs,corner_radius=0)
+            self.languagebutton.configure(self,text="",command=self.getinputs,corner_radius=0)
+            self.initialize()
             self.vocabcheck()
         
     def checkplayerinput(self,event=None):
         self.filledplayerinput =self.playerinput.get()
+        return(self.filledplayerinput)
         
     def vocabcheck(self):
-        self.createdictionary()
-        print(self.dictionary) 
         for index, (key, value) in enumerate(self.dictionary.items()):
-            print(f"Index: {index}, Key: {key}, Value: {value}")
 
-            self.currentvocab = value
+            self.currentvocab = self.dictionary(key,value)
             self.filledplayerinput = self.checkplayerinput()
 
             if self.currentvocab == self.filledplayerinput:
                 self.playerinput.configure(self,fg_color="Green",text_color="white")
             else:
                 self.playerinput.configure(self,fg_color="Red",text_color="white")
-                index-=1
-            print(index)
+        print(self.filledplayerinput)
+        print(self.currentvocab)
+        self.after(500, self.vocabcheck)
+
+    def initialize(self):
+        self.createdictionary()
 
     def createdictionary(self):
         self.dictionary = ai.AIReq(self.selectedlanguage).dic
+        for index, (key, value) in enumerate(self.dictionary.items()):
+            print(f"Index: {index}, Key: {key}, Value: {value}")
 
 
 class GUI(customtkinter.CTk):
