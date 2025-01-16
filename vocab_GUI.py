@@ -64,14 +64,15 @@ class InputFields(customtkinter.CTkFrame):
                 self.keylist.append(key)
                 self.vocablist.append(value)
         for self.index, (key, value) in enumerate(self.dictionary.items()):
-            
+
             self.currentvocab = self.vocablist[self.realindex]
-            self.filledplayerinput = self.checkplayerinput()
+            self.filledplayerinput = self.checkplayerinput()    #Dictionary fangt am anfang wieder an bei overflow
+                                                                #mit len(dictionary) und if statement limiten
             
             if self.currentvocab == self.filledplayerinput:
                 self.playerinput.configure(self,fg_color="Green",text_color="white")
                 self.realindex+=1
-                print(self.realindex)           #FIX MIT .POP BEI DICTIONARIES DIE VALUES IN LISTE ADDEN
+                print(self.realindex)           
 
             else:
                 self.playerinput.configure(self,fg_color="Red",text_color="white")
