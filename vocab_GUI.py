@@ -32,7 +32,7 @@ class InputFields(customtkinter.CTkFrame):
         self.filledplayerinput=self.playerinput.get()
         print(self.selectedlanguage)
         print(self.filledplayerinput)
-        
+        self.vocabcheck()
         
 
         
@@ -45,6 +45,8 @@ class InputFields(customtkinter.CTkFrame):
             #print(f"Index: {index}, Key: {key}, Value: {value}")
         if vocab == playervocab:
             self.playerinput.config(self,fg_color="Green",text_color="white")
+        else:
+            self.playerinput.config(self,fg_color="Red",text_color="white")
 
 class GUI(customtkinter.CTk):
     def __init__(self):
