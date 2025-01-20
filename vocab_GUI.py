@@ -70,9 +70,12 @@ class InputFields(customtkinter.CTkFrame):
                                                                 #mit len(dictionary) und if statement limiten
             
             if self.currentvocab == self.filledplayerinput:
-                self.playerinput.configure(self,fg_color="Green",text_color="white")
-                self.realindex+=1
-                print(self.realindex)           
+                if self.realindex <= len(self.dictionary):
+                    self.playerinput.configure(self,fg_color="Green",text_color="white")
+                    self.realindex+=1
+                    print(self.realindex)  
+                else:
+                    self.vocab.configure(self,text="",command=self.getinputs,corner_radius=0)        
 
             else:
                 self.playerinput.configure(self,fg_color="Red",text_color="white")
