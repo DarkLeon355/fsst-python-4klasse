@@ -30,5 +30,4 @@ class AIReq():
         except:
             self.dic = {"Error":"Error"}
 
-
-dictionary = AIReq(str(input("Please type in Language: "))).dic
+#dictionary = AIReq(str(input("Please type in Language: "))).dic

@@ -1,5 +1,6 @@
 import customtkinter
 import vocab_trainer_ai_req as ai
+from CTkMessagebox import CTkMessagebox
 
 
 class InputFields(customtkinter.CTkFrame):
@@ -12,7 +13,7 @@ class InputFields(customtkinter.CTkFrame):
         self.realindex=0
 
         customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-        customtkinter.set_default_color_theme("C:/Users\Mario/OneDrive - HTL Anichstrasse/Desktop/Fsst collectione/FSST/4.Klasse/Fettsack/fsst-python-4klasse/themes/breeze.json")
+        customtkinter.set_default_color_theme("themes/breeze.json")
         self.grid_columnconfigure((0, 1), weight=1) 
         self.grid_rowconfigure((1, 2), weight=1)
         
@@ -21,10 +22,10 @@ class InputFields(customtkinter.CTkFrame):
 
         self.title = customtkinter.CTkLabel(self.titleframe,text="Please input a language then press the button:")
         self.title.grid(row=0, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
-
+      
         self.language = customtkinter.CTkEntry(self)
         self.language.grid(row=1, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
-        self.vocab = customtkinter.CTkTextbox(self,state="disabled",activate_scrollbars=False,height=1)
+        self.vocab = customtkinter.CTkTextbox(self,activate_scrollbars=False,height=1)
         self.vocab.grid(row=3, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
         self.vocablabelframe = customtkinter.CTkFrame(self)
         self.vocablabelframe.grid(row=2, column=0, padx=10, pady=10, sticky="nesw", columnspan=1)
@@ -39,64 +40,59 @@ class InputFields(customtkinter.CTkFrame):
 
         self.languagebutton = customtkinter.CTkButton(self, text="Submit Language", command = self.getinputs)
         self.languagebutton.grid(row=1, column=1, padx=10, pady=10, sticky="nesw", columnspan=1)
-
         self.languageselected = False #To help return the correct value first
+        
+        self.checkbutton = customtkinter.CTkButton(self, text = "Check Input", command = self.checkplayerinput)
+        self.checkbutton.grid(row=10, column=1, columnspan=2, padx = 10, pady = 10, sticky = "nswe")
         
 
     def getinputs(self):
+        self.index = 0
         self.selectedlanguage=self.language.get()
-        self.checkplayerinput()
         print(self.selectedlanguage)
-        print(self.filledplayerinput)
         if self.selectedlanguage == None:
             self.languagebutton.configure(self,text="Input required",command=self.getinputs,corner_radius=0)
         else:
-            self.languagebutton.configure(self,text="",command=self.getinputs,corner_radius=0)
             self.initialize()
-            self.vocabcheck()
+            self.displayvocab()
         
-    def checkplayerinput(self,event=None):
-        self.filledplayerinput =self.playerinput.get()
-        return(self.filledplayerinput)
+    def checkplayerinput(self):
+        self.filledplayerinput = self.playerinput.get()
+        if self.filledplayerinput == self.awnsers[self.index]:
+            print("True")
+            self.checkbutton.configure(fg_color = "green")
+            self.index = self.index + 1
         
-    def vocabcheck(self):
-        for key, value in self.dictionary.items():
-                self.keylist.append(key)
-                self.vocablist.append(value)
-        for self.index, (key, value) in enumerate(self.dictionary.items()):
-
-            self.currentvocab = self.vocablist[self.realindex]
-            self.filledplayerinput = self.checkplayerinput()    #Dictionary fangt am anfang wieder an bei overflow
-                                                                #mit len(dictionary) und if statement limiten
+            self.displayvocab()
+        else:
+            self.checkbutton.configure(fg_color = "red")
+            print("False")
+        
+        if self.index == 21:
+            self.restart()
             
-            if self.currentvocab == self.filledplayerinput:
-                if self.realindex <= (len(self.dictionary)-1):
-                    self.playerinput.configure(self,fg_color="Green",text_color="white")
-                    self.realindex+=1
-                    print(self.realindex)  
-                    print(len(self.dictionary))
-                else:
-                    self.languagebutton.configure(self,text="")
-                    self.dictionary={"None":"None"}
-                    self.keylist=[]
-                    self.vocablist=[]
-
-            else:
-                self.playerinput.configure(self,fg_color="Red",text_color="white")
-
-
-        print(self.filledplayerinput)
-        print(self.currentvocab)
-        self.after(500, self.vocabcheck)
+    def restart(self):
+        self.deutsch = []
+        self.awnsers = []
+        CTkMessagebox(title="Restart", message=f"Please type in a new Language")
+        
+   
+    def displayvocab(self):
+        print(self.deutsch)
+        print(self.awnsers)
+        self.vocab.delete("0.0", "end")
+        self.vocab.insert("0.0", self.deutsch[self.index])
+        
 
 
     def initialize(self):
-        self.createdictionary()
+        self.getvocab()
 
-    def createdictionary(self):
+    def getvocab(self):
         self.dictionary = ai.AIReq(self.selectedlanguage).dic
-        for index, (key, value) in enumerate(self.dictionary.items()):
-            print(f"Index: {index}, Key: {key}, Value: {value}")
+        self.deutsch = (list(self.dictionary.keys()))
+        self.awnsers = (list(self.dictionary.values()))
+            
 
 
 class GUI(customtkinter.CTk):
