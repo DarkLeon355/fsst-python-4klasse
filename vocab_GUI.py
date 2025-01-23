@@ -55,6 +55,7 @@ class InputFields(customtkinter.CTkFrame):
         else:
             self.initialize()
             self.displayvocab()
+            CTkMessagebox(title="Success", message=f"Your selected Language: {self.selectedlanguage}")
         
     def checkplayerinput(self):
         self.filledplayerinput = self.playerinput.get()

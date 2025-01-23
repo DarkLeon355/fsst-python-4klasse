@@ -14,7 +14,7 @@ class AIReq():
         try:
             genai.configure(api_key=self.key1)
             model = genai.GenerativeModel("gemini-1.5-flash")
-            response = model.generate_content(f"Is {self.language} a language except from german? if not reply with Error. If it is give me a python dictionary with german-{self.language} vocabs (at least 20), but dont give it a name just the values")
+            response = model.generate_content(f"Is {self.language} a language except from german? if not reply with Error. If it is give me a python dictionary with german-{self.language} vocabs (at least 20), but dont give it a name just the values, everything uncapitalized, and no duplicates, use easy and hard vocabs")
             print("Key worked")
         except:
             genai.configure(api_key=self.key_recovery)
