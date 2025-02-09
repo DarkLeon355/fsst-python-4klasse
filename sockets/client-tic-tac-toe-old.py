@@ -63,9 +63,13 @@ class TicTacToe:
         
 
 HOST = '127.0.0.1' 
-PORT = 61111      
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((HOST, PORT))
+PORT = 61111   
+while True:
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, PORT))
+    except:
+        print("No connection to server")
 
 obj = TicTacToe()
 
@@ -73,6 +77,4 @@ while True:
     x = obj.input()
     if x:
         break
-    else:
-        
     

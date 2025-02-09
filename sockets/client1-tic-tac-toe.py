@@ -4,9 +4,16 @@ from tictactoe import TicTacToe
 
 
 HOST = '127.0.0.1' 
-PORT = 61111      
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((HOST, PORT))
+PORT = 20001
+
+
+while True:
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, PORT))
+        break
+    except:
+        print("No connection to server")
 
 
 
