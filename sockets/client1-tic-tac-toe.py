@@ -19,17 +19,25 @@ while True:
 
 while True:
     # Receive updated game state or winner from the server
+    print("Waiting for server...")
     obj_pickle = s.recv(1024)
     if not obj_pickle:  # Handle disconnection or empty data
         print("Connection closed by the server.")
         break
     obj = pickle.loads(obj_pickle)  # Update the game state with the received data
-    
-    winner = obj.input()
-    if winner:  # If there's a winner, send it to the server and break
-        s.sendall(pickle.dumps(winner))
-        break
-    else:
-        # Send the updated game state (the TicTacToe object) to the server
+    try:
+        if obj.winner == 'O' or obj.winner == 'X':  # If there's a winner, send it to the server and break
+            print("\nThe game has ended!")
+            print(obj.board[0])
+            print(obj.board[1])
+            print(obj.board[2])
+            print(f"{obj.winner} is the winner!")
+            s.sendall(pickle.dumps(obj))
+            break
+        else:
+            obj.input()
         s.sendall(pickle.dumps(obj))
-        
+
+    except:
+        print("Something went wrong, please reset the server and client.")
+        continue
