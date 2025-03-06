@@ -2,6 +2,7 @@ import socket
 import pickle
 from tictactoe import TicTacToe
 import threading
+import time
 
 class Server:
     def __init__(self):
@@ -23,6 +24,7 @@ class Server:
     def send_game(self):
         with self.lock:
             for client in self.active_clients:
+                print(self.player)
                 if client != self.active_clients[self.player]:
                     try:
                         client.sendall(pickle.dumps(self.game))
@@ -44,20 +46,32 @@ class Server:
                 self.game = data
                 print(f"Sent and recieved game from {self.player}")
                 self.player = 1 if self.player == 0 else 0
+                if self.game.winner == 'O' or self.game.winner == 'X':
+                    self.send_game()
+                    self.player = 1 if self.player == 0 else 0
+                    self.send_game()
+                    self.player = 0
+                    self.game = TicTacToe() # create new game after win
+                    self.active_clients = []
+                    self.manage_connections()
+                    exit()
+
+         
 
         except (ConnectionResetError, ConnectionAbortedError):
             print(f"Lost connection with {address}")
         finally:
             with self.lock:
-                self.active_clients.remove(connection)
-            connection.close()
+                #self.active_clients.remove(connection)
+                pass
+            #connection.close()
 
     def manage_connections(self):
         try:
             while len(self.active_clients) < 2:
                 try:
                     conn, addr = self.sock.accept()
-                    threading.Thread(target=self.client_handler, args=(conn, addr), daemon=True).start()
+                    threading.Thread(target=self.client_handler, args=(conn, addr), daemon=False).start()
                 except Exception as e:
                     print(f"Error accepting connections: {e}")
                     break

@@ -33,7 +33,19 @@ while True:
             print(obj.board[2])
             print(f"{obj.winner} is the winner!")
             s.sendall(pickle.dumps(obj))
-            break
+            
+            response = input("Want to play another game (yes/no): ").strip().lower()
+            if response == "no":
+                break
+            elif response == "yes":
+                s.close()
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect((HOST, PORT))
+            else:
+                print("Wrong input, ending game")
+                break
+
+            
         else:
             obj.input()
         s.sendall(pickle.dumps(obj))
