@@ -37,10 +37,10 @@ class Server:
                 self.active_clients.append(connection)
             while True:
                 self.send_game()
-                rply = connection.recv(1024)
-                if not rply:
+                reply = connection.recv(1024)
+                if not reply:
                     break
-                data = pickle.loads(rply)
+                data = pickle.loads(reply)
                 self.game = data
                 print(f"Sent and recieved game from {self.player}")
                 self.player = 1 if self.player == 0 else 0
