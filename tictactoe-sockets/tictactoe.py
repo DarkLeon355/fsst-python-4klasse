@@ -10,10 +10,10 @@ class TicTacToe:
         print(self.board[1])
         print(self.board[2])
         while True:
-            self.p_row = int(input("\nPlease type in Row:"))
+            self.p_row = int(input("\nPlease type in Column:"))
             if self.p_row > 3 or self.p_row < 1:
                 continue
-            self.p_col = int(input("Please type in Column:"))
+            self.p_col = int(input("Please type in Row:"))
             if self.p_col > 3 or self.p_col < 1:
                 continue
  
