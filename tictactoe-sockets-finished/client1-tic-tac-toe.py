@@ -41,7 +41,7 @@ class client:
             try:
                 self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.s.connect((HOST, PORT))
-                print("Da device is a connected succesfullay")
+                print("Connected to server!")
                 break
             except:
                 print("No connection to server")
