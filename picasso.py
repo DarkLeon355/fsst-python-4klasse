@@ -109,7 +109,7 @@ class GetNasa:
         pp = PrettyPrinter()
         url = "https://api.nasa.gov/planetary/apod"
         self.date = date.today()
-        params = {'api_key': "UGGDC8d1871ZWnJ7nlJSV6GNoOB9HwnKUownAiwe",'date':self.date,'hd':'True'}
+        params = {'api_key': "",'date':self.date,'hd':'True'}
         self.response = requests.get(url,params=params).json()
         pp.pprint(self.response)
         urlretrieve(self.response['hdurl'], "nasa_apod_hd.jpg")
