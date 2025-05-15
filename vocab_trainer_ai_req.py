@@ -5,8 +5,8 @@ import ast
 
 class AIReq():
     def __init__(self, language):
-        self.key1 = "AIzaSyAHWeLtdZ0vxt8wT-DuHJTyzxF9BRkwhP4"
-        self.key_recovery = "AIzaSyAmOteH9Z6BBc93pV5HYAEoIQz5GdwF2NA"
+        self.key1 = ""
+        self.key_recovery = ""
         self.language = language
         print(self.get_response())
 
