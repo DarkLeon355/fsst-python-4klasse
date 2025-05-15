@@ -9,7 +9,7 @@ url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos"
 while True:
     try:
         datum = input("Input date YYYY-MM-DD: ")
-        params = {'earth_date': datum, 'api_key': "UGGDC8d1871ZWnJ7nlJSV6GNoOB9HwnKUownAiwe"}
+        params = {'earth_date': datum, 'api_key': ""}
         if requests.get(url, params=params).status_code == 200:
             response = requests.get(url, params=params).json()
             break
